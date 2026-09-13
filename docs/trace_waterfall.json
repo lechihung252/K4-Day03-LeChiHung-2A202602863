@@ -1,29 +1,155 @@
 [
   {
     "step": 1,
-    "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "query": "Chào bạn, nhân viên chính thức của VinFast được bao nhiêu ngày phép năm và được tham gia những loại bảo hiểm nào?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Nhân viên chính thức của VinFast được hưởng 12 ngày phép năm, và sau mỗi 5 năm làm việc, số ngày phép sẽ tăng thêm 1 ngày.\n\nNgoài ra, nhân viên được tham gia các loại bảo hiểm bao gồm:\n- Bảo hiểm xã hội (BHXH) và Bảo hiểm y tế (BHYT) bắt buộc.\n- Gói bảo hiểm sức khỏe VinFast Care (có các cấp độ Standard, Silver, Gold theo cấp bậc).",
+    "latency_ms": 3709.06
   },
   {
     "step": 1,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Nhân viên VF2026001 còn bao nhiêu ngày phép năm?",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "thought": "OpenAI quyết định gọi công cụ 'leave_balance_query' với tham số: {\"employee_id\": \"VF2026001\"}",
+    "tool_name": "leave_balance_query",
     "arguments": {
-      "student_id": "SV2026001"
+      "employee_id": "VF2026001"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "employee_id": "VF2026001",
+      "data": {
+        "full_name": "Nguyễn Văn An",
+        "department": "Phòng Kỹ thuật Pin (Battery Engineering)",
+        "position": "Kỹ sư Phần mềm",
+        "manager": "Trần Minh Quân",
+        "annual_leave_total": 15,
+        "annual_leave_used": 6,
+        "annual_leave_remaining": 9
+      }
+    },
+    "latency_ms": 1291.49
   },
   {
     "step": 2,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Nhân viên VF2026001 còn bao nhiêu ngày phép năm?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
-    "latency_ms": 10.0
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Nhân viên VF2026001, Nguyễn Văn An, còn lại 9 ngày phép năm. Bạn đã sử dụng 6 ngày trong tổng số 15 ngày phép năm của mình.",
+    "latency_ms": 1001.09
+  },
+  {
+    "step": 1,
+    "query": "Tạo đơn xin nghỉ phép năm cho nhân viên VF2026001 từ ngày 15/09/2026 đến ngày 17/09/2026, lý do việc gia đình.",
+    "action_type": "TOOL_EXECUTION",
+    "thought": "OpenAI quyết định gọi công cụ 'leave_balance_query' với tham số: {\"employee_id\": \"VF2026001\"}",
+    "tool_name": "leave_balance_query",
+    "arguments": {
+      "employee_id": "VF2026001"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "employee_id": "VF2026001",
+      "data": {
+        "full_name": "Nguyễn Văn An",
+        "department": "Phòng Kỹ thuật Pin (Battery Engineering)",
+        "position": "Kỹ sư Phần mềm",
+        "manager": "Trần Minh Quân",
+        "annual_leave_total": 15,
+        "annual_leave_used": 6,
+        "annual_leave_remaining": 9
+      }
+    },
+    "latency_ms": 838.37
+  },
+  {
+    "step": 2,
+    "query": "Tạo đơn xin nghỉ phép năm cho nhân viên VF2026001 từ ngày 15/09/2026 đến ngày 17/09/2026, lý do việc gia đình.",
+    "action_type": "TOOL_EXECUTION",
+    "thought": "OpenAI quyết định gọi công cụ 'create_leave_request' với tham số: {\"employee_id\": \"VF2026001\", \"start_date\": \"15/09/2026\", \"end_date\": \"17/09/2026\", \"leave_type\": \"annual\", \"reason\": \"Việc gia đình\"}",
+    "tool_name": "create_leave_request",
+    "arguments": {
+      "employee_id": "VF2026001",
+      "start_date": "15/09/2026",
+      "end_date": "17/09/2026",
+      "leave_type": "annual",
+      "reason": "Việc gia đình"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "request_id": "LR-VF2026001-101",
+      "employee_id": "VF2026001",
+      "leave_type": "annual",
+      "start_date": "15/09/2026",
+      "end_date": "17/09/2026",
+      "days": 3,
+      "approver": "Trần Minh Quân",
+      "message": "Đã tạo đơn nghỉ phép LR-VF2026001-101 cho Nguyễn Văn An (VF2026001) từ 15/09/2026 đến 17/09/2026 (3 ngày, loại: annual). Đơn đang chờ Trần Minh Quân phê duyệt."
+    },
+    "latency_ms": 1044.93
+  },
+  {
+    "step": 3,
+    "query": "Tạo đơn xin nghỉ phép năm cho nhân viên VF2026001 từ ngày 15/09/2026 đến ngày 17/09/2026, lý do việc gia đình.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Đơn xin nghỉ phép năm đã được tạo thành công cho nhân viên Nguyễn Văn An (mã NV: VF2026001) như sau:\n\n- **Thời gian nghỉ**: Từ ngày **15/09/2026** đến ngày **17/09/2026** (3 ngày)\n- **Lý do**: Việc gia đình\n- **Trạng thái**: Đơn đang chờ phê duyệt từ quản lý **Trần Minh Quân**.\n- **Mã đơn**: LR-VF2026001-101\n\nNếu bạn cần thêm thông tin gì khác, hãy cho tôi biết!",
+    "latency_ms": 1578.57
+  },
+  {
+    "step": 1,
+    "query": "Nhân viên VF2026002 muốn xin nghỉ phép năm 5 ngày từ 21/09/2026 đến 25/09/2026. Hãy kiểm tra xem còn đủ ngày phép không rồi mới tạo đơn giúp tôi.",
+    "action_type": "TOOL_EXECUTION",
+    "thought": "OpenAI quyết định gọi công cụ 'leave_balance_query' với tham số: {\"employee_id\": \"VF2026002\"}",
+    "tool_name": "leave_balance_query",
+    "arguments": {
+      "employee_id": "VF2026002"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "employee_id": "VF2026002",
+      "data": {
+        "full_name": "Trần Thị Bình",
+        "department": "Phòng Nhân sự (HR)",
+        "position": "Chuyên viên Tuyển dụng",
+        "manager": "Lê Thu Hà",
+        "annual_leave_total": 12,
+        "annual_leave_used": 11,
+        "annual_leave_remaining": 1
+      }
+    },
+    "latency_ms": 972.66
+  },
+  {
+    "step": 2,
+    "query": "Nhân viên VF2026002 muốn xin nghỉ phép năm 5 ngày từ 21/09/2026 đến 25/09/2026. Hãy kiểm tra xem còn đủ ngày phép không rồi mới tạo đơn giúp tôi.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Nhân viên Trần Thị Bình (mã số VF2026002) hiện có 1 ngày phép năm còn lại. Do đó, không đủ số ngày phép để xin nghỉ 5 ngày từ 21/09/2026 đến 25/09/2026.\n\nBạn có muốn tôi tạo đơn nghỉ không lương cho nhân viên này không?",
+    "latency_ms": 1194.09
+  },
+  {
+    "step": 1,
+    "query": "Cho tôi biết nhân viên VF9999999 đang có gói bảo hiểm gì?",
+    "action_type": "TOOL_EXECUTION",
+    "thought": "OpenAI quyết định gọi công cụ 'insurance_policy_query' với tham số: {\"employee_id\": \"VF9999999\"}",
+    "tool_name": "insurance_policy_query",
+    "arguments": {
+      "employee_id": "VF9999999"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy nhân viên có mã 'VF9999999' trong hệ thống HR VinFast."
+    },
+    "latency_ms": 1151.4
+  },
+  {
+    "step": 2,
+    "query": "Cho tôi biết nhân viên VF9999999 đang có gói bảo hiểm gì?",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Xin lỗi, nhưng không tìm thấy thông tin nào về nhân viên có mã 'VF9999999' trong hệ thống HR VinFast. Bạn có thể kiểm tra lại mã nhân viên và thử lại.",
+    "latency_ms": 1617.77
   }
 ]

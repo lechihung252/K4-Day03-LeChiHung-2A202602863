@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, nhân viên chính thức của VinFast được bao nhiêu ngày phép năm và được tham gia những loại bảo hiểm nào?",
+    "expected_behavior": "Chatbot trả lời trực tiếp từ chính sách chung trong System Prompt, không cần gọi bất kỳ Tool nào.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Nhân viên VF2026001 còn bao nhiêu ngày phép năm?",
+    "expected_behavior": "Agent nhận diện nhu cầu tra cứu dữ liệu cá nhân, tự động phát sinh Tool Call 'leave_balance_query' với employee_id = VF2026001.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "leave_request_creation",
+    "question": "Tạo đơn xin nghỉ phép năm cho nhân viên VF2026001 từ ngày 15/09/2026 đến ngày 17/09/2026, lý do việc gia đình.",
+    "expected_behavior": "Agent tự động phát sinh Tool Call 'create_leave_request' với đúng employee_id, start_date, end_date, leave_type = annual và trả về mã đơn cùng người phê duyệt.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Nhân viên VF2026002 muốn xin nghỉ phép năm 5 ngày từ 21/09/2026 đến 25/09/2026. Hãy kiểm tra xem còn đủ ngày phép không rồi mới tạo đơn giúp tôi.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct: gọi 'leave_balance_query' để kiểm tra số ngày phép còn lại (VF2026002 chỉ còn 1 ngày), quan sát kết quả rồi quyết định KHÔNG tạo đơn phép năm mà đề xuất nghỉ không lương / hoặc gọi 'create_leave_request' và nhận INSUFFICIENT_LEAVE.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Cho tôi biết nhân viên VF9999999 đang có gói bảo hiểm gì?",
+    "expected_behavior": "Agent gọi 'insurance_policy_query', nhận kết quả NOT_FOUND từ Tool và đưa ra phản hồi lịch sự, đề nghị kiểm tra lại mã nhân viên, không bịa đặt dữ liệu.",
+    "complexity": "Medium"
+  }
+]
